@@ -1,4 +1,5 @@
-import { Box, Center } from '@chakra-ui/react'
+import { Header } from '@/components/Header'
+import { Main } from '@/components/Main'
 import { createRootRoute, Outlet } from '@tanstack/react-router'
 import React, { Suspense } from 'react'
 
@@ -16,9 +17,10 @@ export const Route = createRootRoute({
   component: () => {
     return (
       <>
-        <Center w="full" h="12" pos="fixed" top="0" bg="gray.muted"></Center>
-        <Box h="12"></Box>
-        <Outlet />
+        <Header></Header>
+        <Main>
+          <Outlet />
+        </Main>
         <Suspense>
           <TanStackRouterDevtools />
         </Suspense>

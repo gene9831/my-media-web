@@ -16,16 +16,23 @@ import { Route as rootRoute } from './routes/__root'
 
 // Create Virtual Routes
 
-const AboutLazyImport = createFileRoute('/about')()
+const TvShowsLazyImport = createFileRoute('/tv-shows')()
+const MoviesLazyImport = createFileRoute('/movies')()
 const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
 
-const AboutLazyRoute = AboutLazyImport.update({
-  id: '/about',
-  path: '/about',
+const TvShowsLazyRoute = TvShowsLazyImport.update({
+  id: '/tv-shows',
+  path: '/tv-shows',
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/about.lazy').then((d) => d.Route))
+} as any).lazy(() => import('./routes/tv-shows.lazy').then((d) => d.Route))
+
+const MoviesLazyRoute = MoviesLazyImport.update({
+  id: '/movies',
+  path: '/movies',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/movies.lazy').then((d) => d.Route))
 
 const IndexLazyRoute = IndexLazyImport.update({
   id: '/',
@@ -44,11 +51,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLazyImport
       parentRoute: typeof rootRoute
     }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutLazyImport
+    '/movies': {
+      id: '/movies'
+      path: '/movies'
+      fullPath: '/movies'
+      preLoaderRoute: typeof MoviesLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/tv-shows': {
+      id: '/tv-shows'
+      path: '/tv-shows'
+      fullPath: '/tv-shows'
+      preLoaderRoute: typeof TvShowsLazyImport
       parentRoute: typeof rootRoute
     }
   }
@@ -58,37 +72,42 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
-  '/about': typeof AboutLazyRoute
+  '/movies': typeof MoviesLazyRoute
+  '/tv-shows': typeof TvShowsLazyRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
-  '/about': typeof AboutLazyRoute
+  '/movies': typeof MoviesLazyRoute
+  '/tv-shows': typeof TvShowsLazyRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexLazyRoute
-  '/about': typeof AboutLazyRoute
+  '/movies': typeof MoviesLazyRoute
+  '/tv-shows': typeof TvShowsLazyRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about'
+  fullPaths: '/' | '/movies' | '/tv-shows'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about'
-  id: '__root__' | '/' | '/about'
+  to: '/' | '/movies' | '/tv-shows'
+  id: '__root__' | '/' | '/movies' | '/tv-shows'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
-  AboutLazyRoute: typeof AboutLazyRoute
+  MoviesLazyRoute: typeof MoviesLazyRoute
+  TvShowsLazyRoute: typeof TvShowsLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
-  AboutLazyRoute: AboutLazyRoute,
+  MoviesLazyRoute: MoviesLazyRoute,
+  TvShowsLazyRoute: TvShowsLazyRoute,
 }
 
 export const routeTree = rootRoute
@@ -102,14 +121,18 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/about"
+        "/movies",
+        "/tv-shows"
       ]
     },
     "/": {
       "filePath": "index.lazy.tsx"
     },
-    "/about": {
-      "filePath": "about.lazy.tsx"
+    "/movies": {
+      "filePath": "movies.lazy.tsx"
+    },
+    "/tv-shows": {
+      "filePath": "tv-shows.lazy.tsx"
     }
   }
 }

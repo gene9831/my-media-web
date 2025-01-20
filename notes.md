@@ -1,0 +1,7 @@
+# Notes
+
+iina link
+
+```http
+iina://open?url=http%3A%2F%2Fomv.lan%3A5244%2Fd%2FMovies%2FAlien%2520(1979)%2520DC%2520(1080p%2520BluRay%2520x265%2520HEVC%252010bit%2520HDR%2520AAC%25205.1%2520afm72)%2FAlien%2520(1979)%2520DC%2520(1080p%2520BluRay%2520x265%2520HDR%2520afm72).mkv&mpv_start=01:10:00`
+```
