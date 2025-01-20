@@ -22,7 +22,7 @@ export function Header() {
         zIndex="sticky"
         bg="bg"
       >
-        <Heading asChild size="xl" color="cyan.solid">
+        <Heading asChild size="xl" color="primary.solid">
           <Link to="/">My Midea</Link>
         </Heading>
         <Flex gap="8">
