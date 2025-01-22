@@ -1,4 +1,4 @@
-import { AspectRatio, Box, Card, Center, Grid } from '@chakra-ui/react'
+import { AspectRatio, Box, Card, Grid, Image } from '@chakra-ui/react'
 import { createLazyFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
 
@@ -6,22 +6,29 @@ export const Route = createLazyFileRoute('/movies')({
   component: Movies,
 })
 
-const templatePosts = [
+const templateItems = [
   {
-    src: 'https://image.tmdb.org/t/p/w440_and_h660_face/x6cLNyJWKK7jdaqL9UNPlvJJoVD.jpg',
     name: '肖申克的救赎',
+    poster:
+      'https://image.tmdb.org/t/p/w440_and_h660_face/x6cLNyJWKK7jdaqL9UNPlvJJoVD.jpg',
+    backdrop:
+      'https://image.tmdb.org/t/p/w500_and_h282_face/zfbjgQE1uSd9wiPTX4VzsLi0rGG.jpg',
   },
   {
-    src: 'https://image.tmdb.org/t/p/w1280/y03tzUKvkRCYwJ5NWys4W4bnS9m.jpg',
     name: '教父',
+    poster: 'https://image.tmdb.org/t/p/w1280/y03tzUKvkRCYwJ5NWys4W4bnS9m.jpg',
+    backdrop:
+      'https://image.tmdb.org/t/p/w500_and_h282_face/tmU7GeKVybMWFButWEGl2M4GeiP.jpg',
   },
   {
-    src: 'https://image.tmdb.org/t/p/w1280/4J8jUmjgKPggRPJqqdkjWCj2k0D.jpg',
     name: '教父2',
+    poster: 'https://image.tmdb.org/t/p/w1280/4J8jUmjgKPggRPJqqdkjWCj2k0D.jpg',
+    backdrop:
+      'https://image.tmdb.org/t/p/w500_and_h282_face/kGzFbGhp99zva6oZODW5atUtnqi.jpg',
   },
 ]
 
-const posts = Array(5).fill(templatePosts).flat()
+const item = Array<typeof templateItems>(5).fill(templateItems).flat()
 
 function Movies() {
   const initialValueOfHoverd = { id: '', index: -1, row: -1 }
@@ -52,7 +59,6 @@ function Movies() {
     id: string,
     index: number,
   ) => {
-    console.log(index)
     const cellElem = event.currentTarget.parentElement
     const containerElem = cellElem?.parentElement
 
@@ -119,8 +125,8 @@ function Movies() {
       overflowX="hidden"
       onMouseLeave={handleMouseLeave}
     >
-      {posts.map((post, index) => (
-        <Box key={index} pos="relative" className="group">
+      {item.map((item, index) => (
+        <Box key={index} pos="relative">
           <AspectRatio
             borderWidth="1px"
             borderColor="transparent"
@@ -129,11 +135,11 @@ function Movies() {
             <Box></Box>
           </AspectRatio>
           <Card.Root
-            h="full"
             rounded="lg"
             overflow="hidden"
             pos="absolute"
             top="0"
+            bottom="0"
             left={calcLeftAndRight(index).left}
             right={calcLeftAndRight(index).right}
             zIndex="docked"
@@ -142,11 +148,21 @@ function Movies() {
               handleMouseEnter(event, String(index), index)
             }
           >
-            <Card.Body p="0">
-              {/* <Image src={post.src} alt={post.name}></Image> */}
-              <Center bg="bg.muted" h="full">
-                {index}
-              </Center>
+            <Card.Body p="0" pos="relative">
+              <Image
+                src={item.poster}
+                opacity={hoverd.id === String(index) ? '0' : '1'}
+                transition="all 0.4s"
+                pos="absolute"
+              ></Image>
+              <Image
+                src={item.backdrop}
+                w="full"
+                h="full"
+                opacity={hoverd.id === String(index) ? '1' : '0'}
+                transition="all 0.4s"
+                pos="absolute"
+              ></Image>
             </Card.Body>
           </Card.Root>
         </Box>
