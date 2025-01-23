@@ -148,18 +148,17 @@ function Movies() {
               handleMouseEnter(event, String(index), index)
             }
           >
-            <Card.Body p="0" pos="relative">
+            <Card.Body
+              p="0"
+              pos="relative"
+              backgroundImage={`url(${item.backdrop})`}
+              backgroundSize="cover"
+              backgroundPosition="center"
+            >
               <Image
                 src={item.poster}
-                opacity={hoverd.id === String(index) ? '0' : '1'}
-                transition="all 0.4s"
-                pos="absolute"
-              ></Image>
-              <Image
-                src={item.backdrop}
                 w="full"
-                h="full"
-                opacity={hoverd.id === String(index) ? '1' : '0'}
+                opacity={hoverd.id === String(index) ? '0' : '1'}
                 transition="all 0.4s"
                 pos="absolute"
               ></Image>
