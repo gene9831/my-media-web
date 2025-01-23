@@ -1,4 +1,12 @@
-import { AspectRatio, Box, Card, Grid, Image } from '@chakra-ui/react'
+import {
+  AspectRatio,
+  Box,
+  Card,
+  Grid,
+  Image,
+  Stack,
+  Text,
+} from '@chakra-ui/react'
 import { createLazyFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
 
@@ -149,19 +157,39 @@ function Movies() {
             }
           >
             <Card.Body
-              p="0"
               pos="relative"
-              backgroundImage={`url(${item.backdrop})`}
+              backgroundImage={`linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),url(${item.backdrop})`}
               backgroundSize="cover"
               backgroundPosition="center"
             >
               <Image
                 src={item.poster}
                 w="full"
+                pos="absolute"
+                top="0"
+                left="0"
                 opacity={hoverd.id === String(index) ? '0' : '1'}
                 transition="all 0.4s"
-                pos="absolute"
               ></Image>
+              <Stack
+                p="6"
+                w="full"
+                h="full"
+                pos="absolute"
+                top="0"
+                left="0"
+                opacity={hoverd.id === String(index) ? '1' : '0'}
+                transition="all 0.4s"
+              >
+                <Box flex="1"></Box>
+                <Text
+                  fontSize="lg"
+                  color="white"
+                  textShadow="1px 1px 2px black"
+                >
+                  {item.name}
+                </Text>
+              </Stack>
             </Card.Body>
           </Card.Root>
         </Box>
