@@ -1,7 +1,9 @@
+import { movies } from '@/mock/movies'
 import {
   AspectRatio,
   Box,
   Card,
+  Flex,
   Grid,
   Image,
   Stack,
@@ -9,34 +11,15 @@ import {
 } from '@chakra-ui/react'
 import { createLazyFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
+import { LuDot } from 'react-icons/lu'
 
 export const Route = createLazyFileRoute('/movies')({
   component: Movies,
 })
 
-const templateItems = [
-  {
-    name: '肖申克的救赎',
-    poster:
-      'https://image.tmdb.org/t/p/w440_and_h660_face/x6cLNyJWKK7jdaqL9UNPlvJJoVD.jpg',
-    backdrop:
-      'https://image.tmdb.org/t/p/w500_and_h282_face/zfbjgQE1uSd9wiPTX4VzsLi0rGG.jpg',
-  },
-  {
-    name: '教父',
-    poster: 'https://image.tmdb.org/t/p/w1280/y03tzUKvkRCYwJ5NWys4W4bnS9m.jpg',
-    backdrop:
-      'https://image.tmdb.org/t/p/w500_and_h282_face/tmU7GeKVybMWFButWEGl2M4GeiP.jpg',
-  },
-  {
-    name: '教父2',
-    poster: 'https://image.tmdb.org/t/p/w1280/4J8jUmjgKPggRPJqqdkjWCj2k0D.jpg',
-    backdrop:
-      'https://image.tmdb.org/t/p/w500_and_h282_face/kGzFbGhp99zva6oZODW5atUtnqi.jpg',
-  },
-]
-
-const item = Array<typeof templateItems>(5).fill(templateItems).flat()
+const POST_URL = 'https://image.tmdb.org/t/p/w342'
+const BACKDROP_URL = 'https://image.tmdb.org/t/p/w500'
+const item = Array<typeof movies>(5).fill(movies).flat()
 
 function Movies() {
   const initialValueOfHoverd = { id: '', index: -1, row: -1 }
@@ -158,12 +141,12 @@ function Movies() {
           >
             <Card.Body
               pos="relative"
-              backgroundImage={`linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),url(${item.backdrop})`}
+              backgroundImage={`linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),url(${BACKDROP_URL}${item.backdrop_path})`}
               backgroundSize="cover"
               backgroundPosition="center"
             >
               <Image
-                src={item.poster}
+                src={`${POST_URL}${item.poster_path}`}
                 w="full"
                 pos="absolute"
                 top="0"
@@ -184,11 +167,25 @@ function Movies() {
                 <Box flex="1"></Box>
                 <Text
                   fontSize="lg"
+                  fontWeight="bold"
                   color="white"
                   textShadow="1px 1px 2px black"
+                  textWrap="nowrap"
+                  overflow="hidden"
+                  textOverflow="ellipsis"
+                  title={item.title}
                 >
-                  {item.name}
+                  {item.title}
                 </Text>
+                <Flex color="white" alignItems="center">
+                  <Text textShadow="1px 1px 2px black">
+                    {item.release_date.split('-')[0]}
+                  </Text>
+                  <LuDot />
+                  <Text textShadow="1px 1px 2px black">
+                    {Math.floor(item.runtime / 60)}h {item.runtime % 60}m
+                  </Text>
+                </Flex>
               </Stack>
             </Card.Body>
           </Card.Root>
